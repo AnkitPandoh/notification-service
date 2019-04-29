@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+	<table width="600" cellpadding="10" cellspacing="20" align="center" style="background-color:#f5f6fb;color:#777;font-size:15px;line-height:20px;font-family:'Trebuchet MS',sans">
+	<tbody>
+	<tr>
+		<td width="600" valign="top" style="background-color:#fff;padding:30px;font-size:16px;line-height:26px">
+			<p>${message}</p>
+		</td>
+	</tr>
+	</tbody>
+</table>
+</html>

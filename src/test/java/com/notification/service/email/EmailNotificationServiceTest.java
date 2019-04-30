@@ -50,7 +50,7 @@ public class EmailNotificationServiceTest {
 	@Test(expected = NotificationException.class)
 	public void testSendNotification_whenToIsMissing() throws NotificationException {
 		EmailRequest request = new EmailRequest();
-		request.setFrom("xyz@test.com");
+		request.setFrom(properties.getProperty("email.username"));
 		request.setSubject("test");
 		emailService.sendNotification(request);
 	}
@@ -58,8 +58,8 @@ public class EmailNotificationServiceTest {
 	@Test(expected = NotificationException.class)
 	public void testSendNotification_whenSubjectIsMissing() throws NotificationException {
 		EmailRequest request = new EmailRequest();
-		request.setFrom("srvcacct007@gmail.com");
-		request.setTo("pandoh.2007@gmail.com");
+		request.setFrom(properties.getProperty("email.username"));
+		request.setTo("xyz@gmail.com");
 		request.setMessage("test message");
 		emailService.sendNotification(request);
 	}
@@ -67,8 +67,8 @@ public class EmailNotificationServiceTest {
 	@Test(expected = NotificationException.class)
 	public void testSendNotification_whenMessageIsMissing() throws NotificationException {
 		EmailRequest request = new EmailRequest();
-		request.setFrom("srvcacct007@gmail.com");
-		request.setTo("pandoh.2007@gmail.com");
+		request.setFrom(properties.getProperty("email.username"));
+		request.setTo("xyz@gmail.com");
 		request.setSubject("test");
 		emailService.sendNotification(request);
 	}
@@ -76,8 +76,8 @@ public class EmailNotificationServiceTest {
 	@Test(expected = Test.None.class)
 	public void testSendNotification_whenNoMissingField() throws NotificationException {
 		EmailRequest request = new EmailRequest();
-		request.setFrom("servacct007@gmail.com");
-		request.setTo("pandoh.2007@gmail.com");
+		request.setFrom(properties.getProperty("email.username"));
+		request.setTo("xyz@gmail.com");
 		request.setSubject("test");
 		request.setMessage("Hi This is test message");
 		emailService.sendNotification(request);

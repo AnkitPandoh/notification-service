@@ -5,12 +5,9 @@ import java.util.Map;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.notification.bean.EmailRequest;
 
-@Component
 public class EmailRequestGenerator {
 	
 	private static final String TO = "to";
@@ -19,11 +16,15 @@ public class EmailRequestGenerator {
 	private static final String SUBJECT = "subject";
 	private static final String TEMPLATE = "template";
 	
-	@Autowired
 	private VelocityEngine velocityEngine;
 	
-	@Autowired
 	private EmailConfig config;
+	
+	
+	public EmailRequestGenerator(EmailConfig config, VelocityEngine velocityEngine) {
+		this.config = config;
+		this.velocityEngine = velocityEngine;
+	}
 	
 	public EmailRequest generateEmailRequest(Map<String, Object> emailModel){
 

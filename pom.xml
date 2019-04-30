@@ -21,6 +21,8 @@
 		<velocity.version>1.7</velocity.version>
 		<spring-version>5.1.6.RELEASE</spring-version>
 		<jackson-version>2.9.8</jackson-version>
+		<junit-jupiter.version>5.4.2</junit-jupiter.version>
+		<junit.platform.version>1.4.2</junit.platform.version>
 	</properties>
 
 	<dependencies>
@@ -40,7 +42,7 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!-- Spring dependecies -->
+		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>

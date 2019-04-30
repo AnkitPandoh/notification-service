@@ -2,9 +2,7 @@ package com.notification.bean;
 
 import java.io.File;
 
-import com.notification.type.NotificationType;
-
-public class EmailRequest extends NotificationRequest{
+public class EmailRequest{
 
 	private String from;
 	private String subject;
@@ -15,10 +13,6 @@ public class EmailRequest extends NotificationRequest{
 	private boolean hasAttachment;
 	private File attachment;
 	
-	public EmailRequest(){
-		super(NotificationType.EMAIL);
-	}
-
 	public String getFrom() {
 		return from;
 	}

@@ -3,9 +3,11 @@ package com.notification.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.notification.bean.EmailRequest;
 import com.notification.exception.NotificationException;
+import com.notification.service.INotification;
+import com.notification.service.email.EmailConfig;
 import com.notification.service.email.EmailNotificationService;
 import com.notification.service.email.EmailRequestGenerator;
 import com.notification.type.NotificationType;
@@ -25,13 +29,16 @@ import com.notification.type.NotificationType;
 public class NotificationController {
 
 	@Autowired
-	private EmailNotificationService emailService;
-
-	@Autowired
 	private ObjectMapper mapper;
+	
+	@Autowired
+	private EmailConfig config;
 
 	@Autowired
-	private EmailRequestGenerator emailRequestGenerator;
+	private JavaMailSender emailSender;
+	
+	@Autowired
+	private VelocityEngine velocityEngine;
 
 	@RequestMapping(value = "/v1/{type}", method = RequestMethod.POST)
 	public ResponseEntity<Void> sendMessage(@RequestBody String request, @PathVariable String type)
@@ -42,8 +49,11 @@ public class NotificationController {
 		try {
 			switch (notifyType) {
 			case EMAIL:
-				Map<String, Object> requestMap = mapper.readValue(request, new TypeReference<Map<String, Object>>() {});
-				EmailRequest emailRequest = emailRequestGenerator.generateEmailRequest(requestMap);
+				Map<String, Object> requestMap = mapper.readValue(request, new TypeReference<Map<String, Object>>() {
+				});
+				EmailRequestGenerator requestGen = new EmailRequestGenerator(config, velocityEngine);
+				EmailRequest emailRequest = requestGen.generateEmailRequest(requestMap);
+				INotification<EmailRequest> emailService = new EmailNotificationService(emailSender);
 				emailService.sendNotification(emailRequest);
 				break;
 			case SMS:

@@ -9,12 +9,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.notification.bean.EmailRequest;
 import com.notification.exception.NotificationException;
+import com.notification.service.INotificationService;
 
 public class EmailNotificationServiceTest {
 
 	private static final String TEST_PROPERTIES_FILE = "application-test.properties";
 
-	private EmailNotificationService emailService;
+	private JavaMailSenderImpl emailSender;
 
 	private Properties properties;
 
@@ -23,7 +24,7 @@ public class EmailNotificationServiceTest {
 		properties = new Properties();
 		properties.load(EmailNotificationServiceTest.class.getClassLoader().getResourceAsStream(TEST_PROPERTIES_FILE));
 
-		JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
+		emailSender = new JavaMailSenderImpl();
 		emailSender.setHost(properties.getProperty("email.host"));
 		emailSender.setPort(Integer.parseInt(properties.getProperty("email.port")));
 		emailSender.setUsername(properties.getProperty("email.username"));
@@ -36,7 +37,7 @@ public class EmailNotificationServiceTest {
 		prop.setProperty("mail.debug", "true");
 
 		emailSender.setJavaMailProperties(prop);
-		emailService = new EmailNotificationService(emailSender);
+		//emailService = new EmailNotificationService(emailSender, new EmailRequest());
 	}
 
 	@Test(expected = NotificationException.class)
@@ -44,7 +45,8 @@ public class EmailNotificationServiceTest {
 		EmailRequest request = new EmailRequest();
 		request.setTo("xyz@test.com");
 		request.setSubject("test");
-		emailService.sendNotification(request);
+		INotificationService emailService = new EmailNotificationService(emailSender, request);
+		emailService.sendNotification();
 	}
 
 	@Test(expected = NotificationException.class)
@@ -52,7 +54,8 @@ public class EmailNotificationServiceTest {
 		EmailRequest request = new EmailRequest();
 		request.setFrom(properties.getProperty("email.username"));
 		request.setSubject("test");
-		emailService.sendNotification(request);
+		INotificationService emailService = new EmailNotificationService(emailSender, request);
+		emailService.sendNotification();
 	}
 
 	@Test(expected = NotificationException.class)
@@ -61,7 +64,8 @@ public class EmailNotificationServiceTest {
 		request.setFrom(properties.getProperty("email.username"));
 		request.setTo("xyz@gmail.com");
 		request.setMessage("test message");
-		emailService.sendNotification(request);
+		INotificationService emailService = new EmailNotificationService(emailSender, request);
+		emailService.sendNotification();
 	}
 
 	@Test(expected = NotificationException.class)
@@ -70,7 +74,8 @@ public class EmailNotificationServiceTest {
 		request.setFrom(properties.getProperty("email.username"));
 		request.setTo("xyz@gmail.com");
 		request.setSubject("test");
-		emailService.sendNotification(request);
+		INotificationService emailService = new EmailNotificationService(emailSender, request);
+		emailService.sendNotification();
 	}
 
 	@Test(expected = Test.None.class)
@@ -80,6 +85,7 @@ public class EmailNotificationServiceTest {
 		request.setTo("xyz@gmail.com");
 		request.setSubject("test");
 		request.setMessage("Hi This is test message");
-		emailService.sendNotification(request);
+		INotificationService emailService = new EmailNotificationService(emailSender, request);
+		emailService.sendNotification();
 	}
 }

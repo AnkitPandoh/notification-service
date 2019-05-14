@@ -1,16 +1,18 @@
-package com.notification.service.email;
+package com.notification.config;
 
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.notification.service.email.EmailRequestGenerator;
+
 @Configuration
-public class EmailConfig {
+public class NotificationConfig {
 
 	@Value("${email.host}")
 	private String host;
@@ -27,7 +29,6 @@ public class EmailConfig {
 	@Value("${email.protocol}")
 	private String protocol;
 
-	@Bean
 	public JavaMailSender emailSender() {
 		JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
 		emailSender.setHost(host);
@@ -46,7 +47,6 @@ public class EmailConfig {
 		return emailSender;
 	}
 
-	@Bean
 	public VelocityEngine velocityEngine() {
 		Properties props = new Properties();
 		props.setProperty("resource.loader", "class");
@@ -57,7 +57,12 @@ public class EmailConfig {
 
 		return new VelocityEngine(props);
 	}
-	
+
+	public EmailRequestGenerator requestGenerator(Map<String, Object> emailModel) {
+		return new EmailRequestGenerator(velocityEngine(), emailModel);
+
+	}
+
 	public String getHost() {
 		return host;
 	}

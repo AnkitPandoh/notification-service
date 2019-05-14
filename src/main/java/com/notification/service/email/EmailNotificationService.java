@@ -7,18 +7,20 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import com.notification.bean.EmailRequest;
 import com.notification.exception.NotificationException;
-import com.notification.service.INotification;
+import com.notification.service.INotificationService;
 
-public class EmailNotificationService implements INotification<EmailRequest> {
+public class EmailNotificationService implements INotificationService {
 
-	private JavaMailSender emailSender;
+	private final JavaMailSender emailSender;
+	private final EmailRequest request;
 
-	public EmailNotificationService(JavaMailSender emailSender) {
+	public EmailNotificationService(JavaMailSender emailSender, EmailRequest request) {
 		this.emailSender = emailSender;
+		this.request = request;
 	}
 
 	@Override
-	public void sendNotification(final EmailRequest request) throws NotificationException {
+	public void sendNotification() throws NotificationException {
 		try {
 			MimeMessagePreparator preparator = (mimeMessage) -> {
 				MimeMessageHelper mailMessage = new MimeMessageHelper(mimeMessage);

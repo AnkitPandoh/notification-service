@@ -37,7 +37,6 @@ public class EmailNotificationServiceTest {
 		prop.setProperty("mail.debug", "true");
 
 		emailSender.setJavaMailProperties(prop);
-		//emailService = new EmailNotificationService(emailSender, new EmailRequest());
 	}
 
 	@Test(expected = NotificationException.class)

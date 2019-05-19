@@ -76,15 +76,4 @@ public class EmailNotificationServiceTest {
 		INotificationService emailService = new EmailNotificationService(emailSender, request);
 		emailService.sendNotification();
 	}
-
-	@Test(expected = Test.None.class)
-	public void testSendNotification_whenNoMissingField() throws NotificationException {
-		EmailRequest request = new EmailRequest();
-		request.setFrom(properties.getProperty("email.username"));
-		request.setTo("xyz@gmail.com");
-		request.setSubject("test");
-		request.setMessage("Hi This is test message");
-		INotificationService emailService = new EmailNotificationService(emailSender, request);
-		emailService.sendNotification();
-	}
 }

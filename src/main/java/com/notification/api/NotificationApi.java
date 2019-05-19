@@ -25,15 +25,12 @@ public class NotificationApi {
 	
 	private static final String FROM_ADDRESS = "from";
 	
-	private final ApiWrapper wrapper;
+	@Autowired
+	private ApiWrapper wrapper;
 
 	@Autowired
 	private NotificationConfig config;
 	
-	public NotificationApi() {
-		this.wrapper = new ApiWrapper();
-	}
-
 	@RequestMapping(path = "/v1/{type}", method = RequestMethod.POST)
 	public ResponseEntity<String> sendNotification(@RequestBody String requestBody, @PathVariable String type) throws NotificationException {
 		

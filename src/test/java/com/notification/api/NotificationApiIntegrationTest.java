@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -44,7 +45,8 @@ public class NotificationApiIntegrationTest {
 		String expectedResponse = "{\"error\": \"Something went wrong while processing your request\",\"ok\":false}";
 		JSONAssert.assertEquals(expectedResponse, response.getResponse().getContentAsString(), false);
 	}
-
+	
+	@Ignore
 	@Test
 	public void testForOkResponse() throws Exception {
 		MvcResult response = mvc.perform(post("/notify/v1/email").content(TEST_BODY).accept(MediaType.APPLICATION_JSON))

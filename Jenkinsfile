@@ -1,9 +1,11 @@
 pipeline{
 	
-	dockerfile {
-		filename 'Dockerfile.build'
-		dir 'build'
-		label 'jenkins-pipeline'
+	agent{
+		dockerfile {
+			filename 'Dockerfile.build'
+			dir 'build'
+			label 'jenkins-pipeline'
+		}
 	}
 	
 	stages{

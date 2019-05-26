@@ -1,6 +1,6 @@
 pipeline{
 	
-	agent {
+	dockerfile {
 		filename 'Dockerfile.build'
 		dir 'build'
 		label 'jenkins-pipeline'

@@ -4,7 +4,6 @@ pipeline{
 		dockerfile {
 			filename 'Dockerfile.build'
 			dir 'build'
-			label 'jenkins-pipeline'
 		}
 	}
 	

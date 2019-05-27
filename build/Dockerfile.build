@@ -1,4 +1,4 @@
-FROM maven:3-alpine
+FROM ubuntu:18.04
 
 LABEL maintainer="Ankit Pandoh"
 
@@ -18,9 +18,9 @@ WORKDIR ${WORKDIR}
 
 #RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ${WORKDIR}/sonar-scanner/bin/sonar-scanner
 
-#RUN apt-get update && \
-#	apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
-    
+RUN apt-get update && \
+	apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
+
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 
 RUN add-apt-repository \
@@ -29,3 +29,5 @@ RUN add-apt-repository \
    stable"
 
 RUN apt-get install docker-ce=18.09.6 docker-ce-cli=18.09.6 containerd.io
+
+RUN apt-get install -y maven

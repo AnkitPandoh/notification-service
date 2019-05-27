@@ -38,9 +38,7 @@ pipeline{
 		}*/
 		stage('Build Docker Image'){
 			steps{
-				script{
-					dockerImage = docker.build("${env.DOCKER_IMAGE_TAG}",  '-f ./Dockerfile .')
-				}
+				sh 'docker version'
 			}
 		}
 	}

@@ -22,15 +22,15 @@ RUN apt-get update && apt-get -y install docker-ce docker-ce-cli containerd.io
 RUN apt-get -y install maven
 
 #Install Sonar CLI to run sonar commands in Jenkins
-RUN apt-get -y install zip unzip
-RUN curl -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip -o sonarscanner.zip \
-  && unzip -qq sonarscanner.zip \
-  && rm -rf sonarscanner.zip \
-  && mv sonar-scanner-3.3.0.1492-linux sonar-scanner
+#RUN apt-get -y install zip unzip
+#RUN curl -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip -o sonarscanner.zip \
+#  && unzip -qq sonarscanner.zip \
+#  && rm -rf sonarscanner.zip \
+#  && mv sonar-scanner-3.3.0.1492-linux sonar-scanner
   
-COPY sonar-scanner.properties sonar-scanner/conf/sonar-scanner.properties
+#COPY sonar-scanner.properties sonar-scanner/conf/sonar-scanner.properties
 
-ENV SONAR_RUNNER_HOME=${WORKDIR}/sonar-scanner
-ENV PATH $PATH:${WORKDIR}/sonar-scanner/bin
+#ENV SONAR_RUNNER_HOME=${WORKDIR}/sonar-scanner
+#ENV PATH $PATH:${WORKDIR}/sonar-scanner/bin
 
-RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ${WORKDIR}/sonar-scanner/bin/sonar-scanner
+#RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ${WORKDIR}/sonar-scanner/bin/sonar-scanner

@@ -6,6 +6,7 @@ ENV WORKDIR /home/ankit
 
 WORKDIR ${WORKDIR}
 
+#Install Docker CE to run docker commands in Jenkins
 RUN apt-get update \
 	&& apt-get -y install \
 	apt-transport-https \
@@ -21,8 +22,11 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
    	   stable" \
    	&& apt-get update 
    	&& apt-get install -y docker-ce docker-ce-cli containerd.io \
-	&& apt-get install -y maven
+   	
+#Install Maven
+RUN apt-get install -y maven
 
+#Install Sonar CLI to run sonar commands in Jenkins
 RUN curl -v -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.0.702-linux.zip -o sonarscanner.zip \
   && unzip -qq sonarscanner.zip \
   && rm -rf sonarscanner.zip \

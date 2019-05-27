@@ -24,7 +24,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
    	&& apt-get install -y docker-ce docker-ce-cli containerd.io \
    	
 #Install Maven
-RUN apt-get install -y maven
+RUN apt-get update && apt-get install -y maven
 
 #Install Sonar CLI to run sonar commands in Jenkins
 RUN curl -v -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.0.702-linux.zip -o sonarscanner.zip \

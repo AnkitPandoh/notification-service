@@ -19,7 +19,8 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
    	   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    	   $(lsb_release -cs) \
    	   stable" \
-   	&& apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io \
+   	&& apt-get update 
+   	&& apt-get install -y docker-ce docker-ce-cli containerd.io \
 	&& apt-get install -y maven
 
 RUN curl -v -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.0.702-linux.zip -o sonarscanner.zip \

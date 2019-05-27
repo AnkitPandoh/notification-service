@@ -29,16 +29,16 @@ pipeline{
                 }
             }
 		}
-		/*stage('sonar'){
+		stage('sonar'){
 			steps{
 				withSonarQubeEnv('Sonar-Qube'){
 					sh 'sonar-scanner'
 				}
 			}
-		}*/
+		}
 		stage('Build Docker Image'){
 			steps{
-				sh 'docker version'
+				sh 'docker build -t ${DOCKER_IMAGE_TAG} .'
 			}
 		}
 	}

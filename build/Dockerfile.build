@@ -6,27 +6,30 @@ ENV WORKDIR /home/ankit
 
 WORKDIR ${WORKDIR}
 
-#RUN curl -v -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.0.702-linux.zip -o sonarscanner.zip \
-#  && unzip -qq sonarscanner.zip \
-#  && rm -rf sonarscanner.zip \
-#  && mv sonar-scanner-cli-3.0.0.702-linux sonar-scanner
+RUN apt-get update \
+	&& apt-get -y install \
+	apt-transport-https \
+	ca-certificates \
+	curl \
+	gnupg-agent \
+	software-properties-common
+
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+	&& add-apt-repository \
+   	   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   	   $(lsb_release -cs) \
+   	   stable" \
+   	&& apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io \
+	&& apt-get install -y maven
+
+RUN curl -v -s -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.0.702-linux.zip -o sonarscanner.zip \
+  && unzip -qq sonarscanner.zip \
+  && rm -rf sonarscanner.zip \
+  && mv sonar-scanner-cli-3.0.0.702-linux sonar-scanner
   
-#COPY sonar-scanner.properties sonar-scanner/conf/sonar-scanner.properties
+COPY sonar-scanner.properties sonar-scanner/conf/sonar-scanner.properties
 
-#ENV SONAR_RUNNER_HOME=${WORKDIR}/sonar-scanner
-#ENV PATH $PATH:${WORKDIR}/sonar-scanner/bin
+ENV SONAR_RUNNER_HOME=${WORKDIR}/sonar-scanner
+ENV PATH $PATH:${WORKDIR}/sonar-scanner/bin
 
-#RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ${WORKDIR}/sonar-scanner/bin/sonar-scanner
-
-RUN apt-get update && apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-
-RUN add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-
-RUN apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io
-
-RUN apt-get install -y maven
+RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' ${WORKDIR}/sonar-scanner/bin/sonar-scanner
